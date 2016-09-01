@@ -27,7 +27,7 @@ public class NewPresentImpl implements NewContact.Presenter {
     }
 
     @Override
-    public void loadNewsData() {
+    public void loadCZCommonNewsData() {
         SourceModel mSourceModel = new SourceModel("http://3g.czbtv.com/wapczxw/",
                 "#czxw a",
                 "",
@@ -35,7 +35,44 @@ public class NewPresentImpl implements NewContact.Presenter {
                 "http://3g.czbtv.com/wapczxw/",
                 "#czxw");
         mNewsSourceModelList.add(mSourceModel);
-        mNewsSource.crawlerNews(mSourceModel);
+        mNewsSource.crawlerNews(mSourceModel, ENewsType.ECZCommon);
+
+    }
+
+    @Override
+    public void loadCZMinShengNewsData() {
+        SourceModel mSourceModel2 = new SourceModel("http://www.chaozhoudaily.com/index.php/news/cate/pcid/1/cid/14.html",
+                "#main .main_content tr",
+                "td:eq(1)",
+                "td:eq(1) a",
+                "http://www.chaozhoudaily.com/",
+                "#main .news_content");
+        mNewsSourceModelList.add(mSourceModel2);
+        mNewsSource.crawlerNews(mSourceModel2, ENewsType.EMinSheng);
+    }
+
+    @Override
+    public void loadJianshuNewsData() {
+        SourceModel mSourceModel = new SourceModel("http://www.jianshu.com/collection/9c97d62b7f6a",
+                "#list-container .have-img",
+                ".title",
+                ".title a",
+                "http://www.jianshu.com",
+                ".show-content");
+        mNewsSourceModelList.add(mSourceModel);
+        mNewsSource.crawlerNews(mSourceModel, ENewsType.EJianshu);
+    }
+
+    @Override
+    public void loadJieyangNewsData() {
+        SourceModel mSourceModel = new SourceModel("http://www.jynews.net/Category_182/index.aspx",
+                "#right_caitou_v8 table table table table tr a",
+                "",
+                "",
+                "http://www.jynews.net/",
+                "span.STYLE666");
+        mNewsSourceModelList.add(mSourceModel);
+        mNewsSource.crawlerNews(mSourceModel, ENewsType.EJieyang);
     }
 
     @Override
@@ -81,9 +118,34 @@ public class NewPresentImpl implements NewContact.Presenter {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GetTitleEvent getTitleEvent) {
         if (getTitleEvent != null && getTitleEvent.titleModels != null) {
-            if (mView != null) {
-                mView.addNewsTitleData(getTitleEvent.titleModels);
+            switch (getTitleEvent.eNewsType) {
+                case ECZCommon: {
+                    if (mView != null && mView.getNewsType().equals(ENewsType.ECZCommon)) {
+                        mView.addNewsTitleData(getTitleEvent.titleModels);
+                    }
+                }
+                break;
+                case EJianshu: {
+                    if (mView != null && mView.getNewsType().equals(ENewsType.EJianshu)) {
+                        mView.addNewsTitleData(getTitleEvent.titleModels);
+                    }
+                }
+                break;
+                case EMinSheng: {
+                    if (mView != null && mView.getNewsType().equals(ENewsType.EMinSheng)) {
+                        mView.addNewsTitleData(getTitleEvent.titleModels);
+                    }
+                }
+                break;
+                case EJieyang: {
+                    if (mView != null && mView.getNewsType().equals(ENewsType.EJieyang)) {
+                        mView.addNewsTitleData(getTitleEvent.titleModels);
+                    }
+                }
+                break;
             }
+
+
         }
     }
 }

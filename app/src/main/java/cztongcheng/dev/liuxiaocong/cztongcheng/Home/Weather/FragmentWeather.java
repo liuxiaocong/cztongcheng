@@ -111,10 +111,10 @@ public class FragmentWeather extends FragmentBase {
             target = random.nextInt(mRandomColorList.size());
             setThirdSuggestBg(mRandomColorList.get(target));
             try {
-                RadiusDrawable cd = new RadiusDrawable(Util.getPxFromDp(5),
-                        Util.getPxFromDp(5),
-                        Util.getPxFromDp(5),
-                        Util.getPxFromDp(5),
+                RadiusDrawable cd = new RadiusDrawable(Util.getPxFromDp(10),
+                        Util.getPxFromDp(10),
+                        Util.getPxFromDp(10),
+                        Util.getPxFromDp(10),
                         Color.parseColor("#ffffff"));
                 weatherStatusWrap.setBackgroundDrawable(cd);
             } catch (Exception e) {

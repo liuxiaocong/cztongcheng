@@ -11,9 +11,13 @@ import cztongcheng.dev.liuxiaocong.cztongcheng.Base.BaseView;
 public interface NewContact {
     interface View extends BaseView<Presenter> {
         void addNewsTitleData(List<TitleModel> titleModels);
+        ENewsType getNewsType();
     }
 
     interface Presenter extends BasePresenter<View> {
-        void loadNewsData();
+        void loadCZCommonNewsData();
+        void loadCZMinShengNewsData();
+        void loadJianshuNewsData();
+        void loadJieyangNewsData();
     }
 }

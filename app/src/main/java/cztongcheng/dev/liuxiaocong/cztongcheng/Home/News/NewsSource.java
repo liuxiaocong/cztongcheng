@@ -29,7 +29,7 @@ public class NewsSource {
         //EventBus.getDefault().unregister(this);
     }
 
-    public void crawlerNews(final SourceModel sourceModel) {
+    public void crawlerNews(final SourceModel sourceModel, final ENewsType eNewsType) {
         rx.Observable.create(new rx.Observable.OnSubscribe<List<TitleModel>>() {
             @Override
             public void call(Subscriber<? super List<TitleModel>> subscriber) {
@@ -99,7 +99,7 @@ public class NewsSource {
 
                     @Override
                     public void onNext(List<TitleModel> titleModels) {
-                        EventBus.getDefault().post(new GetTitleEvent(titleModels));
+                        EventBus.getDefault().post(new GetTitleEvent(titleModels, sourceModel, eNewsType));
                     }
                 });
     }
