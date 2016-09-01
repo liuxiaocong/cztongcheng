@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        barColorWhenSelected="#1D8AE7"
+        icon="@drawable/ic_camera_black_24dp"
+        id="@+id/tab_news"
+        title="@string/news" />
+    <tab
+        barColorWhenSelected="#219327"
+        icon="@drawable/ic_cloud_circle_black_24dp"
+        id="@+id/tab_weather"
+        title="@string/weather" />
+</tabs>

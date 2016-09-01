@@ -1,0 +1,11 @@
+<tabs>
+    <tab
+        id="@+id/tab_news"
+        icon="@drawable/ic_camera_black_24dp"
+        title="@String/news" />
+    <tab
+        id="@+id/tab_weather"
+        icon="@drawable/ic_cloud_circle_black_24dp"
+        title="@String/weather" />
+
+</tabs>
