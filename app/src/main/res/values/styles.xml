@@ -12,9 +12,12 @@
         <item name="tabIndicatorColor">#ffffff</item>
         <item name="tabTextAppearance">@style/TabTextStyle</item>
         <item name="tabSelectedTextColor">#ffffff</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@style/SlideRightAnimation</item>
     </style>
 
     <style name="WebViewTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
         <item name="colorPrimaryDark">#1B6EB4</item>
     </style>
 
@@ -114,4 +117,5 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
 </resources>

@@ -67,10 +67,10 @@ public class FragmentNewsContainer extends FragmentBase {
         NewsViewPageAdapter newsViewPageAdapter = new NewsViewPageAdapter(mFragmentManager);
         ArrayList<FragmentNews> fragmentNewses = new ArrayList<>();
         ArrayList<String> titles = new ArrayList<>();
-//        mJYNewCommonFragment = new FragmentNews();
-//        mJYNewCommonFragment.setENewsType(ENewsType.EJieyang);
-//        fragmentNewses.add(mJYNewCommonFragment);
-//        titles.add("揭阳");
+        mJYNewCommonFragment = new FragmentNews();
+        mJYNewCommonFragment.setENewsType(ENewsType.EJieyang);
+        fragmentNewses.add(mJYNewCommonFragment);
+        titles.add("揭阳");
 
         mCZNewCommonFragment = new FragmentNews();
         mCZNewCommonFragment.setENewsType(ENewsType.ECZCommon);
