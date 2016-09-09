@@ -76,6 +76,18 @@ public class NewPresentImpl implements NewContact.Presenter {
     }
 
     @Override
+    public void loadShantouNewsData() {
+        SourceModel mSourceModel = new SourceModel("http://dahuawang.com/gundong/showdetail1.asp?CNo=1101",
+                ".newsList li a",
+                "",
+                "",
+                "http://dahuawang.com/",
+                "#Content .content");
+        mNewsSourceModelList.add(mSourceModel);
+        mNewsSource.crawlerNews(mSourceModel, ENewsType.EShantou);
+    }
+
+    @Override
     public void resume() {
 
     }
@@ -117,35 +129,10 @@ public class NewPresentImpl implements NewContact.Presenter {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GetTitleEvent getTitleEvent) {
-        if (getTitleEvent != null && getTitleEvent.titleModels != null) {
-            switch (getTitleEvent.eNewsType) {
-                case ECZCommon: {
-                    if (mView != null && mView.getNewsType().equals(ENewsType.ECZCommon)) {
-                        mView.addNewsTitleData(getTitleEvent.titleModels);
-                    }
-                }
-                break;
-                case EJianshu: {
-                    if (mView != null && mView.getNewsType().equals(ENewsType.EJianshu)) {
-                        mView.addNewsTitleData(getTitleEvent.titleModels);
-                    }
-                }
-                break;
-                case EMinSheng: {
-                    if (mView != null && mView.getNewsType().equals(ENewsType.EMinSheng)) {
-                        mView.addNewsTitleData(getTitleEvent.titleModels);
-                    }
-                }
-                break;
-                case EJieyang: {
-                    if (mView != null && mView.getNewsType().equals(ENewsType.EJieyang)) {
-                        mView.addNewsTitleData(getTitleEvent.titleModels);
-                    }
-                }
-                break;
+        if (getTitleEvent != null && getTitleEvent.titleModels != null && getTitleEvent.titleModels.size() > 0) {
+            if (mView != null && mView.getNewsType().equals(getTitleEvent.eNewsType)) {
+                mView.addNewsTitleData(getTitleEvent.titleModels);
             }
-
-
         }
     }
 }

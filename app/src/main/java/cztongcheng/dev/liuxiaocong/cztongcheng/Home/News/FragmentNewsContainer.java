@@ -28,6 +28,7 @@ public class FragmentNewsContainer extends FragmentBase {
     private FragmentNews mJYNewCommonFragment;
     private FragmentNews mCZNewCommonFragment;
     private FragmentNews mCZMinShengNewFragment;
+    private FragmentNews mSTNewCommonFragment;
     private FragmentNews mJSNewFragment;
     private FragmentManager mFragmentManager;
 
@@ -55,6 +56,7 @@ public class FragmentNewsContainer extends FragmentBase {
         super.onViewCreated(view, savedInstanceState);
         if (mNewsViewPageAdapter == null) {
             mNewsViewPageAdapter = genNewsViewPageAdapter();
+            mViewpager.setOffscreenPageLimit(3);
             mViewpager.setAdapter(mNewsViewPageAdapter);
             EventBus.getDefault().post(new NewsContainerViewPageReadyEvent(mViewpager));
         }
@@ -67,10 +69,6 @@ public class FragmentNewsContainer extends FragmentBase {
         NewsViewPageAdapter newsViewPageAdapter = new NewsViewPageAdapter(mFragmentManager);
         ArrayList<FragmentNews> fragmentNewses = new ArrayList<>();
         ArrayList<String> titles = new ArrayList<>();
-        mJYNewCommonFragment = new FragmentNews();
-        mJYNewCommonFragment.setENewsType(ENewsType.EJieyang);
-        fragmentNewses.add(mJYNewCommonFragment);
-        titles.add("揭阳");
 
         mCZNewCommonFragment = new FragmentNews();
         mCZNewCommonFragment.setENewsType(ENewsType.ECZCommon);
@@ -82,10 +80,21 @@ public class FragmentNewsContainer extends FragmentBase {
         fragmentNewses.add(mCZMinShengNewFragment);
         titles.add("民生");
 
-        mJSNewFragment = new FragmentNews();
-        mJSNewFragment.setENewsType(ENewsType.EJianshu);
-        fragmentNewses.add(mJSNewFragment);
-        titles.add("简书");
+
+        mJYNewCommonFragment = new FragmentNews();
+        mJYNewCommonFragment.setENewsType(ENewsType.EJieyang);
+        fragmentNewses.add(mJYNewCommonFragment);
+        titles.add("揭阳");
+
+        mSTNewCommonFragment = new FragmentNews();
+        mSTNewCommonFragment.setENewsType(ENewsType.EShantou);
+        fragmentNewses.add(mSTNewCommonFragment);
+        titles.add("汕头");
+
+//        mJSNewFragment = new FragmentNews();
+//        mJSNewFragment.setENewsType(ENewsType.EJianshu);
+//        fragmentNewses.add(mJSNewFragment);
+//        titles.add("简书");
 
         newsViewPageAdapter.setFragment(fragmentNewses, titles);
         return newsViewPageAdapter;

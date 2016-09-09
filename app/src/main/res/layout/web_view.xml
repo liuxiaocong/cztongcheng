@@ -16,7 +16,8 @@
             android:layout_height="60dp"
             android:background="#1D8AE7"
             android:gravity="left|center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_scrollFlags="scroll|enterAlways|snap">
 
             <LinearLayout
                 android:id="@+id/back"

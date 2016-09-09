@@ -1,13 +1,12 @@
 package cztongcheng.dev.liuxiaocong.cztongcheng.Home.News;
 
-import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -23,8 +22,10 @@ public class FragmentNews extends FragmentBase implements NewContact.View {
     private View mRoot;
     @BindView(R.id.news_list)
     RecyclerView mRecyclerView;
-    @BindView(R.id.loading)
-    ProgressBar mProgressBar;
+    //    @BindView(R.id.loading)
+//    ProgressBar mProgressBar;
+    @BindView(R.id.swipe_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
 
     NewContact.Presenter mPresenter;
@@ -60,16 +61,38 @@ public class FragmentNews extends FragmentBase implements NewContact.View {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (mNewTitleAdapter != null) return;
-        int color = 0xFF1D8AE7;
-        mProgressBar.getIndeterminateDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+//        int color = 0xFF1D8AE7;
+//        mProgressBar.getIndeterminateDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
         //mProgressBar.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
-        mProgressBar.setVisibility(View.VISIBLE);
+        //mProgressBar.setVisibility(View.VISIBLE);
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+            }
+        });
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+                loadData();
+            }
+        });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mNewTitleAdapter = new NewTitleAdapter();
         mRecyclerView.setAdapter(mNewTitleAdapter);
-        if (mENewsType == null) return;
+
+    }
+
+    private void loadData() {
+        if (mENewsType == null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            return;
+        }
         switch (mENewsType) {
             case ECZCommon: {
                 mPresenter.loadCZCommonNewsData();
@@ -85,6 +108,10 @@ public class FragmentNews extends FragmentBase implements NewContact.View {
             break;
             case EJieyang: {
                 mPresenter.loadJieyangNewsData();
+            }
+            break;
+            case EShantou: {
+                mPresenter.loadShantouNewsData();
             }
             break;
         }
@@ -103,9 +130,10 @@ public class FragmentNews extends FragmentBase implements NewContact.View {
 
     @Override
     public void addNewsTitleData(List<TitleModel> titleModels) {
-        mProgressBar.setVisibility(View.GONE);
+        //mProgressBar.setVisibility(View.GONE);
+        mSwipeRefreshLayout.setRefreshing(false);
         if (mNewTitleAdapter != null) {
-            mNewTitleAdapter.addData(titleModels);
+            mNewTitleAdapter.setData(titleModels);
         }
     }
 

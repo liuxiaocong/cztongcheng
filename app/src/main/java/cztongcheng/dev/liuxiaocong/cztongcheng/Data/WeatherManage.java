@@ -94,7 +94,7 @@ public class WeatherManage {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        EventBus.getDefault().post(new WeatherDataEvent(null));
                     }
 
                     @Override

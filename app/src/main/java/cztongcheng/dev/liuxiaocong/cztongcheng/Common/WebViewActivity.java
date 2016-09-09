@@ -19,7 +19,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
+
 import butterknife.ButterKnife;
+import cztongcheng.dev.liuxiaocong.cztongcheng.Home.News.ENewsType;
+import cztongcheng.dev.liuxiaocong.cztongcheng.Home.News.TitleModel;
 import cztongcheng.dev.liuxiaocong.cztongcheng.R;
 
 /**
@@ -29,6 +32,7 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
     WebView mWebView;
     public static final String HTML_DATA = "HTML_DATA";
     public static final String TITLE = "TITLE";
+    public static final String TITLE_MODEL = "TITLE_MODEL";
     private final static String regxpForFontStartTag = "<font[^>]*?>";
     private final static String regxpForFontEndTag = "</font>";
     @BindView(R.id.title)
@@ -37,10 +41,9 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
     View mBack;
 
 
-    public static void startWithContent(Context context, String title, String content) {
+    public static void startWithTitleModel(Context context, TitleModel titleModel) {
         Intent intent = new Intent(context, WebViewActivity.class);
-        intent.putExtra(HTML_DATA, content);
-        intent.putExtra(TITLE, title);
+        intent.putExtra(TITLE_MODEL, titleModel);
         context.startActivity(intent);
     }
 
@@ -51,15 +54,25 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.web_view);
         mWebView = (WebView) findViewById(R.id.webview);
         Intent i = getIntent();
-        String data = i.getStringExtra(HTML_DATA);
-        String title = i.getStringExtra(TITLE);
+        TitleModel titleModel = (TitleModel) i.getSerializableExtra(TITLE_MODEL);
+        String data = titleModel.getContent();
+        String title = titleModel.getTitle();
         ButterKnife.bind(this);
         mTitle.setText(title);
         mBack.setOnClickListener(this);
-        String head = "<head><style>.MsoNormal{font-size:14px !important;line-height:150% !important;margin-right:5px !important;margin-left:5px !important;text-indent:0 !important}a{word-break: break-all !important;}img{max-width:100% !important;height:auto !important}body{background-color: #fffff !important; width:auto; height: auto;font:14px/20px Calibri,Microsoft YaHei,verdana,Arial,Helvetica,sans-serif !important}}</style><meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\">\n" +
-                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0\"/></head>";
-        data = "<html>" + head + "<body>" + data
-                + "</body></html>";
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<html>");
+        stringBuilder.append("<head>");
+        stringBuilder.append("<style>.MsoNormal{font-size:14px !important;line-height:150% !important;margin-right:5px !important;margin-left:5px !important;text-indent:0 !important}a{word-break: break-all !important;}img{max-width:100% !important;height:auto !important}body{background-color: #fffff !important; width:auto; height: auto;font:14px/20px Calibri,Microsoft YaHei,verdana,Arial,Helvetica,sans-serif !important}}</style>");
+        stringBuilder.append("<meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\">");
+        stringBuilder.append("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0\"/>");
+        if (titleModel.getNewsType().equals(ENewsType.EShantou)) {
+            stringBuilder.append("<base href=\"http://dahuawang.com/\" target=\"_self\">");
+            stringBuilder.append("<style>.c2 .content{padding:0 !important;}</style>");
+        }
+        stringBuilder.append("</head>");
+        stringBuilder.append("<body>");
+
         Pattern p_script = Pattern.compile(regxpForFontStartTag, Pattern.CASE_INSENSITIVE);
         Matcher m_script = p_script.matcher(data);
         data = m_script.replaceAll("");
@@ -67,6 +80,9 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
         p_script = Pattern.compile(regxpForFontEndTag, Pattern.CASE_INSENSITIVE);
         m_script = p_script.matcher(data);
         data = m_script.replaceAll("");
+
+        stringBuilder.append(data);
+        stringBuilder.append("</body></html>");
 
         mWebView.addJavascriptInterface(new InJavaScriptLocalObj(), "local_obj");
         mWebView.getSettings().setSupportZoom(true);
@@ -103,7 +119,7 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
             }
 
         });
-        mWebView.loadDataWithBaseURL(null, data, "text/html", "UTF-8", null);
+        mWebView.loadDataWithBaseURL(null, stringBuilder.toString(), "text/html", "UTF-8", null);
     }
 
     @Override

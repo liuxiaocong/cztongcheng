@@ -23,6 +23,7 @@ public class NewsViewPageAdapter extends FragmentPagerAdapter {
         mFragmentTitleList.clear();
         mFragmentList.addAll(fragmentNewsList);
         mFragmentTitleList.addAll(titleList);
+
     }
 
     @Override

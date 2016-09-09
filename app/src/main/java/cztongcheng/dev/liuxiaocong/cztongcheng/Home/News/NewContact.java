@@ -19,5 +19,6 @@ public interface NewContact {
         void loadCZMinShengNewsData();
         void loadJianshuNewsData();
         void loadJieyangNewsData();
+        void loadShantouNewsData();
     }
 }

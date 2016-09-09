@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import cztongcheng.dev.liuxiaocong.cztongcheng.Common.Util;
+import cztongcheng.dev.liuxiaocong.cztongcheng.Data.DBHelper;
 import cztongcheng.dev.liuxiaocong.cztongcheng.Even.GetTitleEvent;
 import rx.Observer;
 import rx.Subscriber;
@@ -21,6 +22,8 @@ import rx.schedulers.Schedulers;
  * Created by LiuXiaocong on 8/31/2016.
  */
 public class NewsSource {
+    final String TAG = "NewsSource";
+
     public NewsSource() {
         //EventBus.getDefault().register(this);
     }
@@ -30,6 +33,12 @@ public class NewsSource {
     }
 
     public void crawlerNews(final SourceModel sourceModel, final ENewsType eNewsType) {
+        List<TitleModel> cacheTitleModels = DBHelper.getInstance().getTitleModelListByType(eNewsType);
+        if (cacheTitleModels != null && cacheTitleModels.size() > 0) {
+            //return cache first
+            Util.DLog(TAG, "From cache");
+            EventBus.getDefault().post(new GetTitleEvent(cacheTitleModels, sourceModel, eNewsType));
+        }
         rx.Observable.create(new rx.Observable.OnSubscribe<List<TitleModel>>() {
             @Override
             public void call(Subscriber<? super List<TitleModel>> subscriber) {
@@ -40,6 +49,10 @@ public class NewsSource {
                         doc = Jsoup.connect(sourceModel.mUrl).get();
                         Elements newsHeadlines = doc.select(sourceModel.mTitleListFilter);
                         Iterator iterator = newsHeadlines.iterator();
+                        if (newsHeadlines.size() > 0) {
+                            //delete cache and rebuild cache
+                            DBHelper.getInstance().deleteTitleModelByType(eNewsType);
+                        }
                         while (iterator.hasNext()) {
                             String title;
                             String content = "";
@@ -66,10 +79,12 @@ public class NewsSource {
                                 }
                             }
                             if (!Util.isNullOrEmpty(title) && !Util.isNullOrEmpty(content)) {
-                                TitleModel story = new TitleModel();
-                                story.setTitle(title);
-                                story.setContent(content);
-                                titleModelList.add(story);
+                                TitleModel titlemodel = new TitleModel();
+                                titlemodel.setNewsType(eNewsType);
+                                titlemodel.setTitle(title);
+                                titlemodel.setContent(content);
+                                DBHelper.getInstance().insertTitleModel(titlemodel);
+                                titleModelList.add(titlemodel);
                             }
                         }
                     } catch (IOException e) {
@@ -99,6 +114,7 @@ public class NewsSource {
 
                     @Override
                     public void onNext(List<TitleModel> titleModels) {
+                        Util.DLog(TAG, "From network");
                         EventBus.getDefault().post(new GetTitleEvent(titleModels, sourceModel, eNewsType));
                     }
                 });

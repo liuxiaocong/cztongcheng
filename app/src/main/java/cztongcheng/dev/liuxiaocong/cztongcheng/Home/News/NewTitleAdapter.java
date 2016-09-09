@@ -20,7 +20,7 @@ import cztongcheng.dev.liuxiaocong.cztongcheng.R;
 public class NewTitleAdapter extends RecyclerView.Adapter<NewTitleAdapter.NewTitleHolder> {
 
     LayoutInflater mLayoutInflater;
-    List<TitleModel> mStoryList = new ArrayList<>();
+    List<TitleModel> mTitleModelList = new ArrayList<>();
     Context mContext;
 
     @Override
@@ -35,29 +35,29 @@ public class NewTitleAdapter extends RecyclerView.Adapter<NewTitleAdapter.NewTit
     }
 
     public void setData(List<TitleModel> data) {
-        mStoryList.clear();
-        mStoryList.addAll(data);
+        mTitleModelList.clear();
+        mTitleModelList.addAll(data);
         notifyDataSetChanged();
     }
 
     public void addData(List<TitleModel> data) {
-        mStoryList.addAll(data);
+        mTitleModelList.addAll(data);
         notifyDataSetChanged();
     }
 
     public void clear() {
-        mStoryList.clear();
+        mTitleModelList.clear();
     }
 
     @Override
     public void onBindViewHolder(NewTitleHolder holder, int position) {
-        TitleModel data = mStoryList.get(position);
+        TitleModel data = mTitleModelList.get(position);
         holder.bind(data);
     }
 
     @Override
     public int getItemCount() {
-        return mStoryList.size();
+        return mTitleModelList.size();
     }
 
     public class NewTitleHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -80,7 +80,7 @@ public class NewTitleAdapter extends RecyclerView.Adapter<NewTitleAdapter.NewTit
                 case R.id.root: {
                     TitleModel titleModel = (TitleModel) view.getTag();
                     Toast.makeText(mContext, titleModel.getTitle(), Toast.LENGTH_SHORT).show();
-                    WebViewActivity.startWithContent(mContext, titleModel.getTitle(), titleModel.getContent());
+                    WebViewActivity.startWithTitleModel(mContext, titleModel);
                 }
                 break;
             }
