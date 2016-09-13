@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 public class SharedPreferencesFactory {
     private static final String KEY_WEATHER_DATA = "KEY_WEATHER_DATA";
     private static final String KEY_NEWS_DATA = "KEY_NEWS_DATA";
+    private static final String KEY_CONFIG_DATA = "KEY_CONFIG_DATA";
 
     public static void setNewsDay(Context context, String value) {
         set(context, KEY_NEWS_DATA, value);
@@ -18,12 +19,19 @@ public class SharedPreferencesFactory {
         return get(context, KEY_NEWS_DATA, null);
     }
 
+    public static void setConfigData(Context context, String value) {
+        set(context, KEY_CONFIG_DATA, value);
+    }
 
-    public static void setWeatherDay(Context context, String cid, String value) {
+    public static String getConfigData(Context context) {
+        return get(context, KEY_CONFIG_DATA, null);
+    }
+
+    public static void setWeatherData(Context context, String cid, String value) {
         set(context, KEY_WEATHER_DATA + cid, value);
     }
 
-    public static String getWeatherDay(Context context, String cid) {
+    public static String getWeatherData(Context context, String cid) {
         return get(context, KEY_WEATHER_DATA + cid, null);
     }
 

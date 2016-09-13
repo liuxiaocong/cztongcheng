@@ -121,7 +121,7 @@ public class FragmentWeather extends FragmentBase {
 
             }
 
-            String localData = SharedPreferencesFactory.getWeatherDay(getActivity(), Configs.cityId);
+            String localData = SharedPreferencesFactory.getWeatherData(getActivity(), Configs.cityId);
             if (localData != null && localData.length() > 0) {
                 WeatherBean bean = GsonImpl.get().toObject(localData, WeatherBean.class);
                 refreshUI(bean);
@@ -160,7 +160,7 @@ public class FragmentWeather extends FragmentBase {
                             res = res.replace("HeWeather data service 3.0", "root");
                             WeatherBean bean = GsonImpl.get().toObject(res, WeatherBean.class);
                             Log.d("retrofit", res);
-                            SharedPreferencesFactory.setWeatherDay(getActivity(), Configs.cityId, res);
+                            SharedPreferencesFactory.setWeatherData(getActivity(), Configs.cityId, res);
                             refreshUI(bean);
 
                         } catch (Exception e) {

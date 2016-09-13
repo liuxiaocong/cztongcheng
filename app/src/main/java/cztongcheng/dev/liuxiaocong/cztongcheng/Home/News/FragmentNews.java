@@ -13,6 +13,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cztongcheng.dev.liuxiaocong.cztongcheng.Base.FragmentBase;
+import cztongcheng.dev.liuxiaocong.cztongcheng.Config.ConfigBean;
 import cztongcheng.dev.liuxiaocong.cztongcheng.R;
 
 /**
@@ -31,10 +32,10 @@ public class FragmentNews extends FragmentBase implements NewContact.View {
     NewContact.Presenter mPresenter;
     NewTitleAdapter mNewTitleAdapter;
 
-    public ENewsType mENewsType;
+    public ConfigBean.ItemListBean mItemListBean;
 
-    public void setENewsType(ENewsType eNewsType) {
-        mENewsType = eNewsType;
+    public void setItemListBean(ConfigBean.ItemListBean itemListBean) {
+        mItemListBean = itemListBean;
     }
 
     @Override
@@ -89,32 +90,33 @@ public class FragmentNews extends FragmentBase implements NewContact.View {
     }
 
     private void loadData() {
-        if (mENewsType == null) {
+        if (mItemListBean == null) {
             mSwipeRefreshLayout.setRefreshing(false);
             return;
         }
-        switch (mENewsType) {
-            case ECZCommon: {
-                mPresenter.loadCZCommonNewsData();
-            }
-            break;
-            case EJianshu: {
-                mPresenter.loadJianshuNewsData();
-            }
-            break;
-            case EMinSheng: {
-                mPresenter.loadCZMinShengNewsData();
-            }
-            break;
-            case EJieyang: {
-                mPresenter.loadJieyangNewsData();
-            }
-            break;
-            case EShantou: {
-                mPresenter.loadShantouNewsData();
-            }
-            break;
-        }
+        mPresenter.loadNewsData(mItemListBean);
+//        switch (mENewsName) {
+//            case ECZCommon: {
+//                mPresenter.loadCZCommonNewsData();
+//            }
+//            break;
+//            case EJianshu: {
+//                mPresenter.loadJianshuNewsData();
+//            }
+//            break;
+//            case EMinSheng: {
+//                mPresenter.loadCZMinShengNewsData();
+//            }
+//            break;
+//            case EJieyang: {
+//                mPresenter.loadJieyangNewsData();
+//            }
+//            break;
+//            case EShantou: {
+//                mPresenter.loadShantouNewsData();
+//            }
+//            break;
+//        }
     }
 
     @Override
@@ -138,7 +140,7 @@ public class FragmentNews extends FragmentBase implements NewContact.View {
     }
 
     @Override
-    public ENewsType getNewsType() {
-        return mENewsType;
+    public ConfigBean.ItemListBean getItemListBean() {
+        return mItemListBean;
     }
 }

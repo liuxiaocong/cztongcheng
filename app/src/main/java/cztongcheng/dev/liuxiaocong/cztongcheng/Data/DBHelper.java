@@ -6,7 +6,6 @@ import java.util.List;
 import cztongcheng.dev.liuxiaocong.cztongcheng.GreendaoGen.DaoMaster;
 import cztongcheng.dev.liuxiaocong.cztongcheng.GreendaoGen.DaoSession;
 import cztongcheng.dev.liuxiaocong.cztongcheng.GreendaoGen.TitleModelDao;
-import cztongcheng.dev.liuxiaocong.cztongcheng.Home.News.ENewsType;
 import cztongcheng.dev.liuxiaocong.cztongcheng.Home.News.TitleModel;
 import cztongcheng.dev.liuxiaocong.cztongcheng.MyApplication;
 
@@ -36,10 +35,10 @@ public class DBHelper {
         return daoSession;
     }
 
-    public List<TitleModel> getTitleModelListByType(ENewsType eNewsType) {
+    public List<TitleModel> getTitleModelListByItemName(String itemName) {
         DaoSession daoSession = getDaoSession();
         TitleModelDao titleModelDaoDao = daoSession.getTitleModelDao();
-        List<TitleModel> titleModelList = titleModelDaoDao.queryBuilder().where(TitleModelDao.Properties.NewsType.eq(eNewsType.getValue())).list();
+        List<TitleModel> titleModelList = titleModelDaoDao.queryBuilder().where(TitleModelDao.Properties.ItemName.eq(itemName)).list();
         return titleModelList;
     }
 
@@ -49,10 +48,10 @@ public class DBHelper {
         titleModelDao.insert(titleModel);
     }
 
-    public void deleteTitleModelByType(ENewsType eNewsType) {
+    public void deleteTitleModelByItemName(String itemName) {
         DaoSession daoSession = getDaoSession();
         TitleModelDao titleModelDaoDao = daoSession.getTitleModelDao();
-        List<TitleModel> titleModelList = titleModelDaoDao.queryBuilder().where(TitleModelDao.Properties.NewsType.eq(eNewsType)).list();
+        List<TitleModel> titleModelList = titleModelDaoDao.queryBuilder().where(TitleModelDao.Properties.ItemName.eq(itemName)).list();
         if (titleModelList != null && titleModelList.size() > 0) {
             daoSession.delete(titleModelList);
         }

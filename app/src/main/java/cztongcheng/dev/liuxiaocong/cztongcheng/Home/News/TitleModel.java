@@ -19,20 +19,17 @@ public class TitleModel implements Serializable {
     private String content;
     private String orginal;
     private String imageUrl;
+    private String itemName;
 
-
-    @Convert(converter = ENewsTypeConverter.class, columnType = Integer.class)
-    private ENewsType newsType;
-
-    @Generated(hash = 707831110)
+    @Generated(hash = 1706743480)
     public TitleModel(Long id, String title, String content, String orginal, String imageUrl,
-                      ENewsType newsType) {
+            String itemName) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.orginal = orginal;
         this.imageUrl = imageUrl;
-        this.newsType = newsType;
+        this.itemName = itemName;
     }
 
     @Generated(hash = 1146938928)
@@ -55,8 +52,8 @@ public class TitleModel implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-    public void setNewsType(ENewsType newsType) {
-        this.newsType = newsType;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public String getTitle() {
@@ -75,8 +72,8 @@ public class TitleModel implements Serializable {
         return imageUrl;
     }
 
-    public ENewsType getNewsType() {
-        return newsType;
+    public String getItemName() {
+        return itemName;
     }
 
     public Long getId() {

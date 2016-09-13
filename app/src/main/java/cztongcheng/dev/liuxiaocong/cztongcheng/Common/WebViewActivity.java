@@ -66,7 +66,7 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
         stringBuilder.append("<style>.MsoNormal{font-size:14px !important;line-height:150% !important;margin-right:5px !important;margin-left:5px !important;text-indent:0 !important}a{word-break: break-all !important;}img{max-width:100% !important;height:auto !important}body{background-color: #fffff !important; width:auto; height: auto;font:14px/20px Calibri,Microsoft YaHei,verdana,Arial,Helvetica,sans-serif !important}}</style>");
         stringBuilder.append("<meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\">");
         stringBuilder.append("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0\"/>");
-        if (titleModel.getNewsType().equals(ENewsType.EShantou)) {
+        if (titleModel.getItemName().equals("EShantou")) {
             stringBuilder.append("<base href=\"http://dahuawang.com/\" target=\"_self\">");
             stringBuilder.append("<style>.c2 .content{padding:0 !important;}</style>");
         }

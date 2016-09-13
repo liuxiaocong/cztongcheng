@@ -10,6 +10,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import cztongcheng.dev.liuxiaocong.cztongcheng.Config.ConfigManage;
 import cztongcheng.dev.liuxiaocong.cztongcheng.Even.WeatherDataEvent;
 import cztongcheng.dev.liuxiaocong.cztongcheng.Home.HomeActivity;
 import cztongcheng.dev.liuxiaocong.cztongcheng.MyApplication;
@@ -23,9 +24,10 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("SplashActivity123", "onCreate");
+        Log.d("SplashActivity", "onCreate");
         setContentView(R.layout.at_splash);
-        if (MyApplication.getInstance().isSystemReady()) {
+        ConfigManage.getInst().loadData(this);
+        if (MyApplication.getInstance().isWeatherDataReady()) {
             gotoNext(HomeActivity.class);
         } else {
             EventBus.getDefault().register(this);
@@ -46,7 +48,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onWeatherDataEvent(WeatherDataEvent event) {
+    public void onEvent(WeatherDataEvent event) {
         gotoNext(HomeActivity.class);
     }
 }

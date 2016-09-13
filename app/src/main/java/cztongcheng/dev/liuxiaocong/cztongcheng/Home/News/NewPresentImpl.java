@@ -6,9 +6,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import cztongcheng.dev.liuxiaocong.cztongcheng.Config.ConfigBean;
 import cztongcheng.dev.liuxiaocong.cztongcheng.Even.GetTitleEvent;
 
 /**
@@ -16,7 +16,6 @@ import cztongcheng.dev.liuxiaocong.cztongcheng.Even.GetTitleEvent;
  */
 public class NewPresentImpl implements NewContact.Presenter {
     private Context mContext;
-    List<SourceModel> mNewsSourceModelList = new ArrayList<>();
     NewsSource mNewsSource;
     private NewContact.View mView;
 
@@ -27,64 +26,19 @@ public class NewPresentImpl implements NewContact.Presenter {
     }
 
     @Override
-    public void loadCZCommonNewsData() {
-        SourceModel mSourceModel = new SourceModel("http://3g.czbtv.com/wapczxw/",
-                "#czxw a",
-                "",
-                "",
-                "http://3g.czbtv.com/wapczxw/",
-                "#czxw");
-        mNewsSourceModelList.add(mSourceModel);
-        mNewsSource.crawlerNews(mSourceModel, ENewsType.ECZCommon);
-
-    }
-
-    @Override
-    public void loadCZMinShengNewsData() {
-        SourceModel mSourceModel2 = new SourceModel("http://www.chaozhoudaily.com/index.php/news/cate/pcid/1/cid/14.html",
-                "#main .main_content tr",
-                "td:eq(1)",
-                "td:eq(1) a",
-                "http://www.chaozhoudaily.com/",
-                "#main .news_content");
-        mNewsSourceModelList.add(mSourceModel2);
-        mNewsSource.crawlerNews(mSourceModel2, ENewsType.EMinSheng);
-    }
-
-    @Override
-    public void loadJianshuNewsData() {
-        SourceModel mSourceModel = new SourceModel("http://www.jianshu.com/collection/9c97d62b7f6a",
-                "#list-container .have-img",
-                ".title",
-                ".title a",
-                "http://www.jianshu.com",
-                ".show-content");
-        mNewsSourceModelList.add(mSourceModel);
-        mNewsSource.crawlerNews(mSourceModel, ENewsType.EJianshu);
-    }
-
-    @Override
-    public void loadJieyangNewsData() {
-        SourceModel mSourceModel = new SourceModel("http://www.jynews.net/Category_182/index.aspx",
-                "#right_caitou_v8 table table table table tr a",
-                "",
-                "",
-                "http://www.jynews.net/",
-                "span.STYLE666");
-        mNewsSourceModelList.add(mSourceModel);
-        mNewsSource.crawlerNews(mSourceModel, ENewsType.EJieyang);
-    }
-
-    @Override
-    public void loadShantouNewsData() {
-        SourceModel mSourceModel = new SourceModel("http://dahuawang.com/gundong/showdetail1.asp?CNo=1101",
-                ".newsList li a",
-                "",
-                "",
-                "http://dahuawang.com/",
-                "#Content .content");
-        mNewsSourceModelList.add(mSourceModel);
-        mNewsSource.crawlerNews(mSourceModel, ENewsType.EShantou);
+    public void loadNewsData(ConfigBean.ItemListBean itemListBean) {
+        List<ConfigBean.ItemListBean.SourceListBean> sourceList = itemListBean.getSourceList();
+        if (sourceList != null && sourceList.size() > 0) {
+            for (ConfigBean.ItemListBean.SourceListBean sourceListBean : sourceList) {
+                SourceModel mSourceModel = new SourceModel(sourceListBean.getUrl(),
+                        sourceListBean.getTitleListFilter(),
+                        sourceListBean.getTitleSubFilter(),
+                        sourceListBean.getTargetUrlFromTileFilter(),
+                        sourceListBean.getTargetUrlDomain(),
+                        sourceListBean.getTargetContentFilter());
+                mNewsSource.crawlerNews(mSourceModel, itemListBean.getName());
+            }
+        }
     }
 
     @Override
@@ -130,7 +84,7 @@ public class NewPresentImpl implements NewContact.Presenter {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GetTitleEvent getTitleEvent) {
         if (getTitleEvent != null && getTitleEvent.titleModels != null && getTitleEvent.titleModels.size() > 0) {
-            if (mView != null && mView.getNewsType().equals(getTitleEvent.eNewsType)) {
+            if (mView != null && mView.getItemListBean().getName().equals(getTitleEvent.itemName)) {
                 mView.addNewsTitleData(getTitleEvent.titleModels);
             }
         }

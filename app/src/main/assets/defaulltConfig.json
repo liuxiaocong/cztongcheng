@@ -1,0 +1,65 @@
+{
+  "itemList": [
+    {
+      "id": 0,
+      "name": "ECZCommon",
+      "title": "潮州",
+      "sourceList": [
+        {
+          "url": "http://3g.czbtv.com/wapczxw/",
+          "titleListFilter": "#czxw a",
+          "titleSubFilter": "",
+          "targetUrlFromTileFilter": "",
+          "targetUrlDomain": "http://3g.czbtv.com/wapczxw/",
+          "targetContentFilter": "#czxw"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "EMinSheng",
+      "title": "民生",
+      "sourceList": [
+        {
+          "url": "http://www.chaozhoudaily.com/index.php/news/cate/pcid/1/cid/14.html",
+          "titleListFilter": "#main .main_content tr",
+          "titleSubFilter": "td:eq(1)",
+          "targetUrlFromTileFilter": "td:eq(1) a",
+          "targetUrlDomain": "http://www.chaozhoudaily.com/",
+          "targetContentFilter": "#main .news_content"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "EJieyang",
+      "title": "揭阳",
+      "sourceList": [
+        {
+          "url": "http://www.jynews.net/Category_182/index.aspx",
+          "titleListFilter": "#right_caitou_v8 table table table table tr a",
+          "titleSubFilter": "",
+          "targetUrlFromTileFilter": "",
+          "targetUrlDomain": "http://www.jynews.net/",
+          "targetContentFilter": "span.STYLE666"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "EShantou",
+      "title": "汕头",
+      "sourceList": [
+        {
+          "url": "http://dahuawang.com/gundong/showdetail1.asp?CNo=1101",
+          "titleListFilter": ".newsList li a",
+          "titleSubFilter": "",
+          "targetUrlFromTileFilter": "",
+          "targetUrlDomain": "http://dahuawang.com/",
+          "targetContentFilter": "#Content .content"
+        }
+      ]
+    }
+  ]
+}
+

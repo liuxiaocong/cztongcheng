@@ -4,6 +4,7 @@ import java.util.List;
 
 import cztongcheng.dev.liuxiaocong.cztongcheng.Base.BasePresenter;
 import cztongcheng.dev.liuxiaocong.cztongcheng.Base.BaseView;
+import cztongcheng.dev.liuxiaocong.cztongcheng.Config.ConfigBean;
 
 /**
  * Created by LiuXiaocong on 8/31/2016.
@@ -11,14 +12,10 @@ import cztongcheng.dev.liuxiaocong.cztongcheng.Base.BaseView;
 public interface NewContact {
     interface View extends BaseView<Presenter> {
         void addNewsTitleData(List<TitleModel> titleModels);
-        ENewsType getNewsType();
+        ConfigBean.ItemListBean getItemListBean();
     }
 
     interface Presenter extends BasePresenter<View> {
-        void loadCZCommonNewsData();
-        void loadCZMinShengNewsData();
-        void loadJianshuNewsData();
-        void loadJieyangNewsData();
-        void loadShantouNewsData();
+        void loadNewsData(ConfigBean.ItemListBean itemListBean);
     }
 }

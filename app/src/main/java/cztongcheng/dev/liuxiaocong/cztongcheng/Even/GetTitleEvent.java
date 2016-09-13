@@ -12,11 +12,11 @@ import cztongcheng.dev.liuxiaocong.cztongcheng.Home.News.TitleModel;
 public class GetTitleEvent {
     public List<TitleModel> titleModels;
     public SourceModel sourceModel;
-    public ENewsType eNewsType;
+    public String itemName;
 
-    public GetTitleEvent(List<TitleModel> titleModels, SourceModel sourceModel, ENewsType eNewsType) {
+    public GetTitleEvent(List<TitleModel> titleModels, SourceModel sourceModel, String itemName) {
         this.titleModels = titleModels;
         this.sourceModel = sourceModel;
-        this.eNewsType = eNewsType;
+        this.itemName = itemName;
     }
 }

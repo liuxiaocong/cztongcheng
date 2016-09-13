@@ -32,12 +32,12 @@ public class NewsSource {
         //EventBus.getDefault().unregister(this);
     }
 
-    public void crawlerNews(final SourceModel sourceModel, final ENewsType eNewsType) {
-        List<TitleModel> cacheTitleModels = DBHelper.getInstance().getTitleModelListByType(eNewsType);
+    public void crawlerNews(final SourceModel sourceModel, final String itemName) {
+        List<TitleModel> cacheTitleModels = DBHelper.getInstance().getTitleModelListByItemName(itemName);
         if (cacheTitleModels != null && cacheTitleModels.size() > 0) {
             //return cache first
             Util.DLog(TAG, "From cache");
-            EventBus.getDefault().post(new GetTitleEvent(cacheTitleModels, sourceModel, eNewsType));
+            EventBus.getDefault().post(new GetTitleEvent(cacheTitleModels, sourceModel, itemName));
         }
         rx.Observable.create(new rx.Observable.OnSubscribe<List<TitleModel>>() {
             @Override
@@ -51,7 +51,7 @@ public class NewsSource {
                         Iterator iterator = newsHeadlines.iterator();
                         if (newsHeadlines.size() > 0) {
                             //delete cache and rebuild cache
-                            DBHelper.getInstance().deleteTitleModelByType(eNewsType);
+                            DBHelper.getInstance().deleteTitleModelByItemName(itemName);
                         }
                         while (iterator.hasNext()) {
                             String title;
@@ -80,7 +80,7 @@ public class NewsSource {
                             }
                             if (!Util.isNullOrEmpty(title) && !Util.isNullOrEmpty(content)) {
                                 TitleModel titlemodel = new TitleModel();
-                                titlemodel.setNewsType(eNewsType);
+                                titlemodel.setItemName(itemName);
                                 titlemodel.setTitle(title);
                                 titlemodel.setContent(content);
                                 DBHelper.getInstance().insertTitleModel(titlemodel);
@@ -115,7 +115,7 @@ public class NewsSource {
                     @Override
                     public void onNext(List<TitleModel> titleModels) {
                         Util.DLog(TAG, "From network");
-                        EventBus.getDefault().post(new GetTitleEvent(titleModels, sourceModel, eNewsType));
+                        EventBus.getDefault().post(new GetTitleEvent(titleModels, sourceModel, itemName));
                     }
                 });
     }

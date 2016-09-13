@@ -10,10 +10,14 @@ import android.view.ViewGroup;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cztongcheng.dev.liuxiaocong.cztongcheng.Base.FragmentBase;
+import cztongcheng.dev.liuxiaocong.cztongcheng.Common.Util;
+import cztongcheng.dev.liuxiaocong.cztongcheng.Config.ConfigBean;
+import cztongcheng.dev.liuxiaocong.cztongcheng.Config.ConfigManage;
 import cztongcheng.dev.liuxiaocong.cztongcheng.Even.NewsContainerViewPageReadyEvent;
 import cztongcheng.dev.liuxiaocong.cztongcheng.R;
 
@@ -21,15 +25,11 @@ import cztongcheng.dev.liuxiaocong.cztongcheng.R;
  * Created by LiuXiaocong on 9/1/2016.
  */
 public class FragmentNewsContainer extends FragmentBase {
+    private String TAG = "FragmentNewsContainer";
     private View mRoot;
     @BindView(R.id.viewpager)
     public ViewPager mViewpager;
     private NewsViewPageAdapter mNewsViewPageAdapter;
-    private FragmentNews mJYNewCommonFragment;
-    private FragmentNews mCZNewCommonFragment;
-    private FragmentNews mCZMinShengNewFragment;
-    private FragmentNews mSTNewCommonFragment;
-    private FragmentNews mJSNewFragment;
     private FragmentManager mFragmentManager;
 
     @Override
@@ -70,32 +70,18 @@ public class FragmentNewsContainer extends FragmentBase {
         ArrayList<FragmentNews> fragmentNewses = new ArrayList<>();
         ArrayList<String> titles = new ArrayList<>();
 
-        mCZNewCommonFragment = new FragmentNews();
-        mCZNewCommonFragment.setENewsType(ENewsType.ECZCommon);
-        fragmentNewses.add(mCZNewCommonFragment);
-        titles.add("潮州");
+        ConfigBean configBean = ConfigManage.getInst().getConfigData(getActivity());
+        List<ConfigBean.ItemListBean> itemListBeen = configBean.getItemList();
+        Util.DLog(TAG, "genNewsViewPageAdapter:" + itemListBeen.size());
 
-        mCZMinShengNewFragment = new FragmentNews();
-        mCZMinShengNewFragment.setENewsType(ENewsType.EMinSheng);
-        fragmentNewses.add(mCZMinShengNewFragment);
-        titles.add("民生");
-
-
-        mJYNewCommonFragment = new FragmentNews();
-        mJYNewCommonFragment.setENewsType(ENewsType.EJieyang);
-        fragmentNewses.add(mJYNewCommonFragment);
-        titles.add("揭阳");
-
-        mSTNewCommonFragment = new FragmentNews();
-        mSTNewCommonFragment.setENewsType(ENewsType.EShantou);
-        fragmentNewses.add(mSTNewCommonFragment);
-        titles.add("汕头");
-
-//        mJSNewFragment = new FragmentNews();
-//        mJSNewFragment.setENewsType(ENewsType.EJianshu);
-//        fragmentNewses.add(mJSNewFragment);
-//        titles.add("简书");
-
+        if (itemListBeen != null && itemListBeen.size() > 0) {
+            for (ConfigBean.ItemListBean itemListBean : itemListBeen) {
+                FragmentNews fragmentNews = new FragmentNews();
+                fragmentNews.setItemListBean(itemListBean);
+                fragmentNewses.add(fragmentNews);
+                titles.add(itemListBean.getTitle());
+            }
+        }
         newsViewPageAdapter.setFragment(fragmentNewses, titles);
         return newsViewPageAdapter;
     }
