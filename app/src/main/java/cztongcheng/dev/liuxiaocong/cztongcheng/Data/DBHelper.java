@@ -53,7 +53,9 @@ public class DBHelper {
         TitleModelDao titleModelDaoDao = daoSession.getTitleModelDao();
         List<TitleModel> titleModelList = titleModelDaoDao.queryBuilder().where(TitleModelDao.Properties.ItemName.eq(itemName)).list();
         if (titleModelList != null && titleModelList.size() > 0) {
-            daoSession.delete(titleModelList);
+            for (TitleModel titleModel : titleModelList) {
+                daoSession.delete(titleModel);
+            }
         }
     }
 }
