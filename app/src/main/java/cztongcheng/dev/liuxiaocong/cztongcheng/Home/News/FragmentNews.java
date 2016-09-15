@@ -143,4 +143,9 @@ public class FragmentNews extends FragmentBase implements NewContact.View {
     public ConfigBean.ItemListBean getItemListBean() {
         return mItemListBean;
     }
+
+    @Override
+    public void finishRefreshing() {
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
 }

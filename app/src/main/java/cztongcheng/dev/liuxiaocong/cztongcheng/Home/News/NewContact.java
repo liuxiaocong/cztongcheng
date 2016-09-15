@@ -13,6 +13,7 @@ public interface NewContact {
     interface View extends BaseView<Presenter> {
         void addNewsTitleData(List<TitleModel> titleModels);
         ConfigBean.ItemListBean getItemListBean();
+        void finishRefreshing();
     }
 
     interface Presenter extends BasePresenter<View> {

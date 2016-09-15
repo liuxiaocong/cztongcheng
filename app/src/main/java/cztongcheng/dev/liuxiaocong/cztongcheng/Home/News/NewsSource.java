@@ -22,6 +22,8 @@ import rx.schedulers.Schedulers;
  * Created by LiuXiaocong on 8/31/2016.
  */
 public class NewsSource {
+    boolean mIscrawling = false;
+
     final String TAG = "NewsSource";
 
     public NewsSource() {
@@ -32,11 +34,18 @@ public class NewsSource {
         //EventBus.getDefault().unregister(this);
     }
 
-    public void crawlerNews(final SourceModel sourceModel, final String itemName) {
+    public synchronized void crawlerNews(final SourceModel sourceModel, final String itemName) {
+        if (mIscrawling) {
+            //finish refreshing
+            EventBus.getDefault().post(new GetTitleEvent(null, sourceModel, itemName));
+            return;
+        }
+        mIscrawling = true;
         List<TitleModel> cacheTitleModels = DBHelper.getInstance().getTitleModelListByItemName(itemName);
         if (cacheTitleModels != null && cacheTitleModels.size() > 0) {
             //return cache first
             Util.DLog(TAG, "From cache");
+            Util.DLog(TAG, "cacheTitleModels size:" + cacheTitleModels.size());
             EventBus.getDefault().post(new GetTitleEvent(cacheTitleModels, sourceModel, itemName));
         }
         rx.Observable.create(new rx.Observable.OnSubscribe<List<TitleModel>>() {
@@ -115,7 +124,9 @@ public class NewsSource {
                     @Override
                     public void onNext(List<TitleModel> titleModels) {
                         Util.DLog(TAG, "From network");
+                        Util.DLog(TAG, "titleModels size:" + titleModels.size());
                         EventBus.getDefault().post(new GetTitleEvent(titleModels, sourceModel, itemName));
+                        mIscrawling = false;
                     }
                 });
     }
