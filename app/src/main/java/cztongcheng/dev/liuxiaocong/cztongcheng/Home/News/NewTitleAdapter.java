@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +75,8 @@ public class NewTitleAdapter extends RecyclerView.Adapter<NewTitleAdapter.NewTit
         TextView mTitle;
         @BindView(R.id.cover)
         SimpleDraweeView mSimpleDraweeView;
-
+        @BindView(R.id.content)
+        TextView mContent;
         public NewTitleHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
@@ -89,6 +93,19 @@ public class NewTitleAdapter extends RecyclerView.Adapter<NewTitleAdapter.NewTit
                 Uri uri = Uri.parse(story.getImageUrl());
                 mSimpleDraweeView.setImageURI(uri);
                 mSimpleDraweeView.setVisibility(View.VISIBLE);
+            }
+            Document doc = Jsoup.parse(story.getContent());
+            if(doc!=null)
+            {
+              String content = doc.text();
+              if(!Util.isNullOrEmpty(content))
+              {
+                  mContent.setText(content);
+              }else {
+                  mContent.setVisibility(View.GONE);
+              }
+            }else {
+                mContent.setVisibility(View.GONE);
             }
         }
 

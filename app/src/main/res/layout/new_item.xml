@@ -25,7 +25,9 @@
         fresco:placeholderImage="@drawable/default_image_bg"
         fresco:placeholderImageScaleType="centerCrop" />
     <TextView
+        android:maxLines="3"
         android:id="@+id/content"
+        android:ellipsize="end"
         style="@style/news_content"
         android:text="content" />
     <View

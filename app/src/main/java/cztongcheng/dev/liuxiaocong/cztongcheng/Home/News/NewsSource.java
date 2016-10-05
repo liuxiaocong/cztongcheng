@@ -85,6 +85,7 @@ public class NewsSource {
                             if (!Util.isNullOrEmpty(childurl)) {
                                 Document childDoc = Jsoup.connect(childurl).get();
                                 if (childDoc != null) {
+                                    removeUseLessItem(childDoc.select(sourceModel.mTargetContentFilter), itemName);
                                     content = childDoc.select(sourceModel.mTargetContentFilter).html();
                                 }
                                 int imageInx = getImageIndexFrom(itemName);
@@ -141,8 +142,26 @@ public class NewsSource {
                 });
     }
 
-    private int getImageIndexFrom(String itemName)
-    {
+    private void removeUseLessItem(Elements elements, String itemName) {
+        if (elements != null) {
+            if (itemName.equals("ECZCommon")) {
+                Elements elementsP = elements.select("p");
+                if (elementsP == null) return;
+                int targetIndex = -1;
+                for (int i = 0; i < elementsP.size(); i++) {
+                    if (elementsP.get(i).text().contains("视频")) {
+                        targetIndex = i;
+                        break;
+                    }
+                }
+                if (targetIndex > 0) {
+                    elements.select("p:eq(" + targetIndex + ")").remove();
+                }
+            }
+        }
+    }
+
+    private int getImageIndexFrom(String itemName) {
         int ret = 0;
         if (itemName.equals("ECZCommon")) {
             ret = 1;
