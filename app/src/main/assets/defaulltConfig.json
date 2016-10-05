@@ -11,7 +11,8 @@
           "titleSubFilter": "",
           "targetUrlFromTileFilter": "",
           "targetUrlDomain": "http://3g.czbtv.com/wapczxw/",
-          "targetContentFilter": "#czxw"
+          "targetContentFilter": "#czxw",
+          "targetDomain":""
         }
       ]
     },
@@ -26,7 +27,8 @@
           "titleSubFilter": "td:eq(1)",
           "targetUrlFromTileFilter": "td:eq(1) a",
           "targetUrlDomain": "http://www.chaozhoudaily.com/",
-          "targetContentFilter": "#main .news_content"
+          "targetContentFilter": "#main .news_content",
+          "targetDomain":""
         }
       ]
     },
@@ -41,7 +43,8 @@
           "titleSubFilter": "",
           "targetUrlFromTileFilter": "",
           "targetUrlDomain": "http://www.jynews.net/",
-          "targetContentFilter": "span.STYLE666"
+          "targetContentFilter": "span.STYLE666",
+          "targetDomain":""
         }
       ]
     },
@@ -56,7 +59,8 @@
           "titleSubFilter": "",
           "targetUrlFromTileFilter": "",
           "targetUrlDomain": "http://dahuawang.com/",
-          "targetContentFilter": "#Content .content"
+          "targetContentFilter": "#Content .content",
+          "targetDomain":"http://dahuawang.com/"
         }
       ]
     }

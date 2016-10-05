@@ -11,7 +11,7 @@ public class ConfigBean {
      * id : 0
      * name : ECZCommon
      * title : 潮州
-     * sourceList : [{"url":"http://3g.czbtv.com/wapczxw/","titleListFilter":"#czxw a","titleSubFilter":"","targetUrlFromTileFilter":"","targetUrlDomain":"http://3g.czbtv.com/wapczxw/","targetContentFilter":"#czxw"}]
+     * sourceList : [{"url":"http://3g.czbtv.com/wapczxw/","titleListFilter":"#czxw a","titleSubFilter":"","targetUrlFromTileFilter":"","targetUrlDomain":"http://3g.czbtv.com/wapczxw/","targetContentFilter":"#czxw","targetDomain":""}]
      */
 
     private List<ItemListBean> itemList;
@@ -35,6 +35,7 @@ public class ConfigBean {
          * targetUrlFromTileFilter :
          * targetUrlDomain : http://3g.czbtv.com/wapczxw/
          * targetContentFilter : #czxw
+         * targetDomain :
          */
 
         private List<SourceListBean> sourceList;
@@ -78,6 +79,7 @@ public class ConfigBean {
             private String targetUrlFromTileFilter;
             private String targetUrlDomain;
             private String targetContentFilter;
+            private String targetDomain;
 
             public String getUrl() {
                 return url;
@@ -125,6 +127,14 @@ public class ConfigBean {
 
             public void setTargetContentFilter(String targetContentFilter) {
                 this.targetContentFilter = targetContentFilter;
+            }
+
+            public String getTargetDomain() {
+                return targetDomain;
+            }
+
+            public void setTargetDomain(String targetDomain) {
+                this.targetDomain = targetDomain;
             }
         }
     }

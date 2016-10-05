@@ -1,16 +1,23 @@
 package cztongcheng.dev.liuxiaocong.cztongcheng.Home.News;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import cztongcheng.dev.liuxiaocong.cztongcheng.Common.Util;
 import cztongcheng.dev.liuxiaocong.cztongcheng.Common.WebViewActivity;
 import cztongcheng.dev.liuxiaocong.cztongcheng.R;
 
@@ -61,17 +68,28 @@ public class NewTitleAdapter extends RecyclerView.Adapter<NewTitleAdapter.NewTit
     }
 
     public class NewTitleHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @BindView(R.id.title)
         TextView mTitle;
+        @BindView(R.id.cover)
+        SimpleDraweeView mSimpleDraweeView;
 
         public NewTitleHolder(View itemView) {
             super(itemView);
-            mTitle = (TextView) itemView.findViewById(R.id.title);
+            ButterKnife.bind(this,itemView);
             itemView.setOnClickListener(this);
         }
 
         public void bind(TitleModel story) {
             itemView.setTag(story);
             mTitle.setText(story.getTitle());
+            if(Util.isNullOrEmpty(story.getImageUrl()))
+            {
+                mSimpleDraweeView.setVisibility(View.GONE);
+            }else {
+                Uri uri = Uri.parse(story.getImageUrl());
+                mSimpleDraweeView.setImageURI(uri);
+                mSimpleDraweeView.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override

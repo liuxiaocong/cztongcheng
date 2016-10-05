@@ -35,7 +35,8 @@ public class NewPresentImpl implements NewContact.Presenter {
                         sourceListBean.getTitleSubFilter(),
                         sourceListBean.getTargetUrlFromTileFilter(),
                         sourceListBean.getTargetUrlDomain(),
-                        sourceListBean.getTargetContentFilter());
+                        sourceListBean.getTargetContentFilter(),
+                        sourceListBean.getTargetDomain());
                 mNewsSource.crawlerNews(mSourceModel, itemListBean.getName());
             }
         }

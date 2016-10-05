@@ -65,6 +65,7 @@ public class NewsSource {
                         while (iterator.hasNext()) {
                             String title;
                             String content = "";
+                            String imageUrl = "";
                             Element element = (Element) iterator.next();
                             if (!Util.isNullOrEmpty(sourceModel.mTitleSubFilter)) {
                                 title = element.select(sourceModel.mTitleSubFilter).text();
@@ -86,12 +87,21 @@ public class NewsSource {
                                 if (childDoc != null) {
                                     content = childDoc.select(sourceModel.mTargetContentFilter).html();
                                 }
+                                int imageInx = getImageIndexFrom(itemName);
+
+                                if (childDoc.select(sourceModel.mTargetContentFilter) != null && childDoc.select(sourceModel.mTargetContentFilter).select("img") != null && childDoc.select("img").size() > imageInx) {
+                                    imageUrl = childDoc.select("img").get(imageInx).attr("src");
+                                    if (!Util.isNullOrEmpty(sourceModel.mTargetDomain)) {
+                                        imageUrl = sourceModel.mTargetDomain + imageUrl;
+                                    }
+                                }
                             }
                             if (!Util.isNullOrEmpty(title) && !Util.isNullOrEmpty(content)) {
                                 TitleModel titlemodel = new TitleModel();
                                 titlemodel.setItemName(itemName);
                                 titlemodel.setTitle(title);
                                 titlemodel.setContent(content);
+                                titlemodel.setImageUrl(imageUrl);
                                 DBHelper.getInstance().insertTitleModel(titlemodel);
                                 titleModelList.add(titlemodel);
                             }
@@ -129,5 +139,14 @@ public class NewsSource {
                         mIscrawling = false;
                     }
                 });
+    }
+
+    private int getImageIndexFrom(String itemName)
+    {
+        int ret = 0;
+        if (itemName.equals("ECZCommon")) {
+            ret = 1;
+        }
+        return ret;
     }
 }
