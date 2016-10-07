@@ -88,8 +88,7 @@ public class NewPresentImpl implements NewContact.Presenter {
             if (mView != null && mView.getItemListBean().getName().equals(getTitleEvent.itemName)) {
                 mView.addNewsTitleData(getTitleEvent.titleModels);
             }
-        }else if(getTitleEvent!=null && getTitleEvent.titleModels == null)
-        {
+        } else {
             if (mView != null && mView.getItemListBean().getName().equals(getTitleEvent.itemName)) {
                 mView.finishRefreshing();
             }

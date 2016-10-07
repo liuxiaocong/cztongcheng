@@ -8,5 +8,5 @@ public class Configs {
    public final static String remoteWeatherUrl = "x3/weather?key=a77bce0984944a66a621a113d1e23bda";
    public final static String cityId = "CN101281501";
    public final static String remoteConfigHost = "http://chaoshan3.com/";
-   public final static String remoteConfigUrl = "czconfig.json";
+   public final static String remoteConfigUrl = "czconfig1.json";
 }

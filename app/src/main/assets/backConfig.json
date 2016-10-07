@@ -12,7 +12,23 @@
           "targetUrlFromTileFilter": "",
           "targetUrlDomain": "http://3g.czbtv.com/wapczxw/",
           "targetContentFilter": "#czxw",
-          "targetDomain": ""
+          "targetDomain":""
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "EJianshu",
+      "title": "简书",
+      "sourceList": [
+        {
+          "url": "http://www.jianshu.com/collection/9c97d62b7f6a/",
+          "titleListFilter": "#list-container .have-img",
+          "titleSubFilter": ".title",
+          "targetUrlFromTileFilter": ".title a",
+          "targetUrlDomain": "http://www.jianshu.com",
+          "targetContentFilter": ".show-content",
+          "targetDomain":""
         }
       ]
     },
@@ -28,7 +44,7 @@
           "targetUrlFromTileFilter": "td:eq(1) a",
           "targetUrlDomain": "http://www.chaozhoudaily.com/",
           "targetContentFilter": "#main .news_content",
-          "targetDomain": "http://www.chaozhoudaily.com/"
+          "targetDomain":""
         }
       ]
     },
@@ -44,7 +60,7 @@
           "targetUrlFromTileFilter": "",
           "targetUrlDomain": "http://www.jynews.net/",
           "targetContentFilter": "span.STYLE666",
-          "targetDomain": ""
+          "targetDomain":""
         }
       ]
     },
