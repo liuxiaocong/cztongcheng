@@ -44,7 +44,7 @@
           "targetUrlFromTileFilter": "",
           "targetUrlDomain": "http://www.jynews.net/",
           "targetContentFilter": "span.STYLE666",
-          "targetDomain": ""
+          "targetDomain": "http://www.jynews.net/"
         }
       ]
     },
@@ -60,7 +60,7 @@
           "targetUrlFromTileFilter": "",
           "targetUrlDomain": "http://dahuawang.com/",
           "targetContentFilter": "#Content .content",
-          "targetDomain":"http://dahuawang.com/"
+          "targetDomain": "http://dahuawang.com/"
         }
       ]
     }
