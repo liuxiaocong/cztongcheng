@@ -12,6 +12,7 @@ import java.io.Serializable;
  */
 @Entity
 public class TitleModel implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id(autoincrement = true)
     private Long id;
 

@@ -22,7 +22,7 @@ public class TitleModelDao extends AbstractDao<TitleModel, Long> {
     /**
      * Properties of entity TitleModel.<br/>
      * Can be used for QueryBuilder and for referencing column names.
-    */
+     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Title = new Property(1, String.class, "title", false, "TITLE");
@@ -30,7 +30,7 @@ public class TitleModelDao extends AbstractDao<TitleModel, Long> {
         public final static Property Orginal = new Property(3, String.class, "orginal", false, "ORGINAL");
         public final static Property ImageUrl = new Property(4, String.class, "imageUrl", false, "IMAGE_URL");
         public final static Property ItemName = new Property(5, String.class, "itemName", false, "ITEM_NAME");
-    };
+    }
 
 
     public TitleModelDao(DaoConfig config) {
@@ -170,6 +170,11 @@ public class TitleModelDao extends AbstractDao<TitleModel, Long> {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public boolean hasKey(TitleModel entity) {
+        return entity.getId() != null;
     }
 
     @Override
