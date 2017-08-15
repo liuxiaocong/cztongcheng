@@ -130,7 +130,7 @@ public class FragmentWeather extends FragmentBase {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.heweather.com/")
+                .baseUrl(Configs.remoteWeatherHost)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(httpClient.build())
                 .build();
@@ -157,7 +157,7 @@ public class FragmentWeather extends FragmentBase {
                     public void onNext(ResponseBody responseBody) {
                         try {
                             String res = responseBody.string();
-                            res = res.replace("HeWeather data service 3.0", "root");
+                            res = res.replace("HeWeather5", "root");
                             WeatherBean bean = GsonImpl.get().toObject(res, WeatherBean.class);
                             Log.d("retrofit", res);
                             SharedPreferencesFactory.setWeatherData(getActivity(), Configs.cityId, res);

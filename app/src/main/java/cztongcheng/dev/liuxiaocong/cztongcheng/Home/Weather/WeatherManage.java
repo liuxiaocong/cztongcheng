@@ -75,7 +75,7 @@ public class WeatherManage {
                             public void onNext(ResponseBody responseBody) {
                                 try {
                                     String res = responseBody.string();
-                                    res = res.replace("HeWeather data service 3.0", "root");
+                                    res = res.replace("HeWeather5", "root");
                                     WeatherBean bean = GsonImpl.get().toObject(res, WeatherBean.class);
                                     Log.d("retrofit", res);
                                     SharedPreferencesFactory.setWeatherData(context, Configs.cityId, res);

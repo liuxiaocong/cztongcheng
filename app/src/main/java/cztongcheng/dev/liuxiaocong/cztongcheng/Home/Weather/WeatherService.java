@@ -14,5 +14,5 @@ import rx.Observer;
  */
 public interface WeatherService {
     @GET(Configs.remoteWeatherUrl)
-    Observable<ResponseBody> getWeather(@Query("cityid") String cid);
+    Observable<ResponseBody> getWeather(@Query("city") String cid);
 }
